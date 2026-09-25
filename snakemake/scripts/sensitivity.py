@@ -2,8 +2,15 @@ import pandas as pd
 
 sensitivity = {}
 for co2 in [150, 100, 50, 25, 0]:
+
+    #######
     n.global_constraints.loc["CO2Limit", "constant"] = co2 * 1e6
+
+    #######
     n.optimize(solver_name="highs", log_to_console=False)
+
+    ### Aggregation step
+
     sensitivity[co2] = (
         pd.concat([n.statistics.capex(), n.statistics.opex()])
         .groupby("carrier")
