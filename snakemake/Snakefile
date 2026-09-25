@@ -43,7 +43,7 @@ rule solve:
         rules.add_constraint.output
     output:
         "results/solved_cem_{CO2}.nc"
-    shell: "python scripts/solve.py {input} {output}"
+    script: "scripts/solve.py"
 
 rule aggregation:
     input:

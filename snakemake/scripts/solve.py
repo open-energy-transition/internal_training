@@ -11,14 +11,16 @@ def main(network: pypsa.Network) -> pypsa.Network:
 
 if __name__ == "__main__":
 
-    import sys
+    try:
+        network_path = str(snakemake.input)
+        solved_network_path = str(snakemake.output)
+    except NameError:
+        import sys
 
-    args = sys.argv[1:]
+        args = sys.argv[1:]
+        network_path = args[0]
+        solved_network_path = args[1]
 
-    network_path = args[0]
     network = pypsa.Network(network_path)
-
     solved_network = main(network)
-
-    solved_network_path = args[1]
     solved_network.export_to_netcdf(solved_network_path)
